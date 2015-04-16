@@ -18,7 +18,7 @@ class NoseTestCommand(TestCommand):
         import nose
         nose.run_exit(argv=['nosetests'])
 
-setup(
+setupe
     name='alchemyapi',
     version=__version__,
     description=__doc__,
