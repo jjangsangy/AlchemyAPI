@@ -18,7 +18,7 @@ class NoseTestCommand(TestCommand):
         import nose
         nose.run_exit(argv=['nosetests'])
 
-setupe
+setup(
     name='alchemyapi',
     version=__version__,
     description=__doc__,
@@ -43,6 +43,7 @@ setupe
         'Natural Language :: English',
         'License :: OSI Approved :: Apache Software License',
         'Operating System :: OS Independent',
+        'Environment :: Web Environment',
         'Programming Language :: Unix Shell',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.6',

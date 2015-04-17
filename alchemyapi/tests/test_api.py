@@ -18,10 +18,18 @@ test_html = '<html><head><title>The best SDK Test | AlchemyAPI</title></head><bo
 test_url = 'http://www.nytimes.com/2013/07/13/us/politics/a-day-of-friction-notable-even-for-a-fractious-congress.html?_r=0'
 test_jpg = 'pigeon.jpg'
 
-alchemyapi = AlchemyAPI()
-
 
 class TestAPI(unittest.TestCase):
+
+    def setUP(self):
+        if not 'ALCHEMY_API_KEY' in os.environ:
+            raise AssertionError('API Key needed to run Unit Tests')
+        KEY = of.environ.get('ALCHEMY_API_KEY')
+        self.key = AlchemyAPI(KEY)
+
+    def tearDown(self):
+        del self.key
+
     # Entities
     def test_entities(self):
         print('Checking entities . . . ')

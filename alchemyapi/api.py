@@ -121,6 +121,7 @@ class AlchemyAPI:
         self.session  = requests.session()
         self.endpoint = HTTPURLEndpoints.build_endpoints()
 
+    # Interface code
     def text(self, flavor, data, options={}):
         """
         Extracts the cleaned text (removes ads, navigation, etc.) for text, a URL or HTML.
