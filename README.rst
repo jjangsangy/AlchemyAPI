@@ -1,5 +1,6 @@
 Python AlchemyAPI Client
 =========================
+|Documentation| |github| |travis|
 A Pythonic interface for IBM Deep Learning with AlchemyAPI
 
 AlchemyAPI is a text analysis and computer vision service utilizing
@@ -10,7 +11,8 @@ Quickstart Guide
 
 Requirements
 -------------
-The Python library requires that you install the `Requests`_ Python module.
+The Python library requires that you install the `Requests <http://docs.python-requests.org/en/latest>`__ Python module.
+
 
 Install dependencies
 
@@ -81,3 +83,11 @@ Image Tagging
 
 .. image:: ./static/The-tree-and-the-stars.jpg
 
+.. |Documentation| image:: https://readthedocs.org/projects/AlchemyAPI/badge/?version=master
+   :target: https://readthedocs.org/projects/AlchemyAPI/?badge=master
+
+.. |github| image:: https://badge.fury.io/gh/jjangsangy%2FAlchemyAPI.svg
+   :target: http://badge.fury.io/gh/jjangsangy%2FAlchemyAPI
+
+.. |travis| image:: https://travis-ci.org/jjangsangy/AlchemyAPI.svg?branch=master
+   :target: https://travis-ci.org/jjangsangy/AlchemyAP
