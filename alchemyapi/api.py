@@ -3,14 +3,13 @@ from __future__ import print_function
 import collections
 import requests
 import sys
-import re
 
 from .compat import urlencode
-from .auth import Client
+from .auth import Auth
 
-__all__ = ['HTTPURLEndpoints', 'AlchemyAPI', 'Client']
+__all__ = ['HTTPContext', 'AlchemyAPI', 'Auth']
 
-class HTTPURLEndpoints(collections.defaultdict):
+class HTTPContext(collections.defaultdict):
 
     def __getattr__(self, key):
         try:
@@ -19,15 +18,15 @@ class HTTPURLEndpoints(collections.defaultdict):
             return self.__getitem__(key)
 
     def __setattr__(self, name, value):
-        if hasattr(HTTPURLEndpoints, name):
+        if hasattr(self.__class__, name):
             raise AttributeError()
         else:
             self[name] = value
 
     def __getitem__(self, name):
         if name not in self:
-            self[name] = HTTPURLEndpoints()
-        return super(HTTPURLEndpoints, self).__getitem__(name)
+            self[name] = self.__class__()
+        return super(self.__class__, self).__getitem__(name)
 
     def serialize(self):
         base = {}
@@ -54,7 +53,7 @@ class HTTPURLEndpoints(collections.defaultdict):
     @classmethod
     def build_endpoints(cls):
 
-        webapi = HTTPURLEndpoints()
+        webapi = cls()
 
         webapi.sentiment.url  = '/url/URLGetTextSentiment'
         webapi.sentiment.text = '/text/TextGetTextSentiment'
@@ -107,15 +106,15 @@ class HTTPURLEndpoints(collections.defaultdict):
 
 class AlchemyAPI:
 
-    def __init__(self, client, base='http://access.alchemyapi.com/calls'):
+    def __init__(self, auth, base='http://access.alchemyapi.com/calls'):
         self.base     = base
-        self.client   = client
+        self.auth   = auth
         self.session  = requests.session()
-        self.endpoints = HTTPURLEndpoints.build_endpoints()
+        self.endpoints = HTTPContext.build_endpoints()
 
     def __repr__(self):
         classname = self.__class__.__name__
-        return '%s(%r)' % (classname, self.client)
+        return '%s(%r)' % (classname, self.auth)
 
     def interface(self, context, flavor, data, **options):
         if context not in self.endpoints:
@@ -149,7 +148,7 @@ class AlchemyAPI:
         """
 
         # Add the API Key and set the output mode to JSON
-        params['apikey'] = self.client.key
+        params['apikey'] = self.auth.key
         params['outputMode'] = 'json'
         # Insert the base url
 

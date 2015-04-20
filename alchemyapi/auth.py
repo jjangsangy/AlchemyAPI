@@ -1,8 +1,8 @@
 
 
-__all__ = ['Client']
+__all__ = ['Auth']
 
-class Client:
+class Auth:
 
     def __init__(self, key=None):
         self.__key = key

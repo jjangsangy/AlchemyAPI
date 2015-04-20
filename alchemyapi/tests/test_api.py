@@ -9,7 +9,7 @@ try:
 except ImportError:
     import unittest
 
-from ..api import AlchemyAPI, Client
+from ..api import AlchemyAPI, Auth
 
 __all__ = ['TestAPI']
 
@@ -23,7 +23,7 @@ class TestAPI(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         key = os.environ.get('ALCHEMY_API_KEY', None)
-        cls._api = AlchemyAPI(Client(key))
+        cls._api = AlchemyAPI(Auth(key))
 
     # Entities
     @unittest.skipIf(not os.environ.get('ALCHEMY_API_KEY', None), 'No API Key')
