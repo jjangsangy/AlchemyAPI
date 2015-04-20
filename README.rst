@@ -84,8 +84,8 @@ Image Tagging
 
 .. image:: ./static/The-tree-and-the-stars.jpg
 
-.. |Documentation| image:: https://readthedocs.org/projects/AlchemyAPI/badge/?version=master
-   :target: https://readthedocs.org/projects/AlchemyAPI/?badge=master
+.. |Documentation| image:: https://readthedocs.org/projects/alchemyapi/badge/?version=master
+   :target: https://readthedocs.org/projects/alchemyapi/?badge=latest
 
 .. |github| image:: https://badge.fury.io/gh/jjangsangy%2FAlchemyAPI.svg
    :target: http://badge.fury.io/gh/jjangsangy%2FAlchemyAPI
