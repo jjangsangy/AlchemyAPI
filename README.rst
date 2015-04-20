@@ -1,6 +1,7 @@
 Python AlchemyAPI Client
 =========================
 |Documentation| |github| |travis|
+
 A Pythonic interface for IBM Deep Learning with AlchemyAPI
 
 AlchemyAPI is a text analysis and computer vision service utilizing
