@@ -5,6 +5,7 @@ Python AlchemyAPI Client
 """
 
 from .api import *
+
 from .tests.test_api import TestAPI
 
 from .__version__ import __build__, __version__, __release__

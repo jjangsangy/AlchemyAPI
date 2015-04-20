@@ -1,7 +1,12 @@
+from __future__ import print_function
+
 import collections
 import requests
+import sys
+import re
 
 from .compat import urlencode
+from .auth import Client
 
 __all__ = ['HTTPURLEndpoints', 'AlchemyAPI', 'Client']
 
@@ -26,9 +31,15 @@ class HTTPURLEndpoints(collections.defaultdict):
 
     def serialize(self):
         base = {}
-        if '_ipython_display_' in self: self.pop('_ipython_display_')
-        if '_getAttributeNames' in self: self.pop('_getAttributeNames')
-        if 'trait_names' in self: self.pop('trait_names')
+        _prune = [
+            '_ipython_display_',
+            '_getAttributeNames',
+            '_ipython_canary_method_should_not_exist_',
+            'trait_names',
+        ]
+        for word in _prune:
+            if word in self:
+                self.pop(word)
         for key, value in self.items():
             if isinstance(value, type(self)):
                 base[key] = value.serialize()
@@ -94,60 +105,36 @@ class HTTPURLEndpoints(collections.defaultdict):
 
         return webapi.serialize()
 
-class Client:
-
-    def __init__(self, key=None):
-        self.__key = key
-
-    def __repr__(self):
-        classname = self.__class__.__name__
-        return '%s(key=%r)' % (classname, 'KEY' if self.key else None)
-
-    def is_valid(self):
-        if not self.key: return False
-        assert isinstance(self.key, str)
-        assert len(self.key) == 40
-        return True
-
-    @property
-    def key(self):
-        return self.__key
-
 class AlchemyAPI:
 
     def __init__(self, client, base='http://access.alchemyapi.com/calls'):
         self.base     = base
         self.client   = client
         self.session  = requests.session()
-        self.endpoint = HTTPURLEndpoints.build_endpoints()
+        self.endpoints = HTTPURLEndpoints.build_endpoints()
 
-    # Interface code
-    def text(self, flavor, data, options={}):
-        """
-        Extracts the cleaned text (removes ads, navigation, etc.) for text, a URL or HTML.
-        For an overview, please refer to: http://www.alchemyapi.com/products/features/text-extraction/
-        For the docs, please refer to: http://www.alchemyapi.com/api/text-extraction/
+    def __repr__(self):
+        classname = self.__class__.__name__
+        return '%s(%r)' % (classname, self.client)
 
-        INPUT:
-        flavor -> which version of the call, i.e. text, url or html.
-        data -> the data to analyze, either the text, the url or html code.
-        options -> various parameters that can be used to adjust how the API works, see below for more info on the available options.
+    def interface(self, context, flavor, data, **options):
+        if context not in self.endpoints:
+            return {
+                'status' : 'ERROR',
+                'statusInfo': 'endpoint {e} not available'.format(e=context)
+            }
 
-        Available Options:
-        useMetadata -> utilize meta description data, 0: disabled, 1: enabled (default)
-        extractLinks -> include links, 0: disabled (default), 1: enabled.
-
-        OUTPUT:
-        The response, already converted from JSON to a Python object.
-        """
         # Make sure this request supports this flavor
-        if flavor not in self.endpoint['text']:
-            return {'status': 'ERROR', 'statusInfo': 'clean text extraction for ' + flavor + ' not available'}
+        if flavor not in self.endpoints.get(context, ''):
+            return {
+                'status': 'ERROR',
+                'statusInfo': 'clean text extraction for {flavor} not available'.format(flavor=flavor)
+            }
 
         # add the data to the options and analyze
         options[flavor] = data
 
-        return self.connect(self.endpoint['text'][flavor], options)
+        return self.connect(self.endpoints[context][flavor], options)
 
     def connect(self, endpoint, params, post_data=bytearray()):
         """
@@ -169,21 +156,21 @@ class AlchemyAPI:
 
         post_url = ""
         try:
-            post_url = self.base + endpoint + \
-                '?' + urlencode(params).encode('utf-8')
+            post_url = self.base + endpoint + '?' + urlencode(params).encode('utf-8')
         except TypeError:
-            post_url = self.base+ endpoint + '?' + urlencode(params)
+            post_url = self.base + endpoint + '?' + urlencode(params)
 
         results = ""
         try:
             results = self.session.post(url=post_url, data=post_data)
         except Exception as e:
-            print(e)
+            print(e, file=sys.stderr)
             return {'status': 'ERROR', 'statusInfo': 'network-error'}
+
         try:
             return results.json()
         except Exception as e:
             if results != "":
-                print(results)
-            print(e)
+                print(results, file=sys.stderr)
+            print(e, file=sys.stderr)
             return {'status': 'ERROR', 'statusInfo': 'parse-error'}
