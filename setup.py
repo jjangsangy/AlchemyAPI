@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 Python AlchemyAPI Client:
     A Pythonic interface for IBM Deep Learning
