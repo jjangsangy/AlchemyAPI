@@ -40,13 +40,16 @@ Image Tagging
 
 .. code-block:: python
 
+   import json
    from alchemyapi import AlchemyAPI, Auth
 
    auth = Auth('$API_KEY')
    api  = AlchemyAPI(auth)
 
    with open('the-tree-and-the-stars.jpg', 'rb') as night_sky:
-       api.interface('image_tagging', 'image', night.sky.read(), imagePostMode='raw')
+       tagging = api.interface('image_tagging', 'image', night.sky.read(), imagePostMode='raw')
+
+   json.dumps(tagging)
 
     {
       "status": "OK",
@@ -77,8 +80,4 @@ Image Tagging
     }
 
 .. image:: ./static/The-tree-and-the-stars.jpg
-
-
-.. _requests: http://docs.python-requests.org/en/latest/
-
 

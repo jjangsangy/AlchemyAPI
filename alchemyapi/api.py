@@ -94,6 +94,8 @@ class HTTPContext(collections.defaultdict):
         webapi.combined.url  = '/url/URLGetCombinedData'
         webapi.combined.text = '/text/TextGetCombinedData'
         webapi.image.url        = '/url/URLGetImage'
+        webapi.image_similar.url = '/url/URLGetRankedSimilarImages'
+        webapi.images_similar.image = '/image/URLGetRankedSimilarImages'
         webapi.image_tagging.url = '/url/URLGetRankedImageKeywords'
         webapi.image_tagging.image = '/image/ImageGetRankedImageKeywords'
         webapi.facetagging.url    = '/url/URLGetRankedImageFaceTags'
