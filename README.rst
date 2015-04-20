@@ -76,8 +76,7 @@ Image Tagging
       ]
     }
 
-.. image:: ./static/the-tree-and-the-stars.jpg
-    :alt: the-tree-and-the-stars
+.. image:: ./static/The-tree-and-the-stars.jpg
 
 
 .. _requests: http://docs.python-requests.org/en/latest/
