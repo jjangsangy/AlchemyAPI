@@ -28,7 +28,7 @@ setup(
     author_email='jjangsangy@gmail.com',
     maintainer='Sang Han',
     maintainer_email='jjangsangy@gmail.com',
-    long_description=open('README.rst').read().decode('utf-8'),
+    long_description=open('README.rst').read(),
     license='Apache License 2.0',
     url='https://github.com/jjangsangy/AlchemyAPI',
     packages=find_packages(),
