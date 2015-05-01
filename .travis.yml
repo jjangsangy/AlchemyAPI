@@ -1,19 +1,19 @@
 language: python
 os:
-    - linux
-    - osx
-
+- linux
+- osx
 python:
-    - '3.4'
-    - '3.3'
-    - '2.7'
-    - 'pypy'
-    - 'pypy3'
-
+- '3.4'
+- '3.3'
+- '2.7'
+- pypy
+- pypy3
 install:
-    - 'pip install -r requirements.txt'
-    - 'pip install -r test-requirements.txt'
-    - 'python setup.py install'
-
+- pip install -r requirements.txt
+- pip install -r test_requirements.txt
+- python setup.py install
 script:
-    - 'python setup.py test'
+- python setup.py test
+env:
+  global:
+    secure: UZ4uVfK3asl5lBhCQSSfBMdl5wYNb+WOa5cIlogrrZz7W01vYpngSDchnTlReAy8iqfA8361fArHmPrdAtR9FREfxVfA9Vaa5tAL47ATnc0jrgEfTBcZ1uA4O8LOONJ1LRNjCjKVgWCXHWy/h5x1HBQrgfbldEAfihB2FX5Nu6A=
