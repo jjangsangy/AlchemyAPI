@@ -47,7 +47,7 @@ Image Tagging
    import os
    from alchemyapi import AlchemyAPI, Auth
 
-   API_KEY = os.env.get("ALCHEMY_API_KEY")
+   API_KEY = os.environ.get("ALCHEMY_API_KEY")
 
    auth = Auth(API_KEY)
    api  = AlchemyAPI(auth)
