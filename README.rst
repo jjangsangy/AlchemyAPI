@@ -53,7 +53,7 @@ Image Tagging
    api  = AlchemyAPI(auth)
 
    with open('the-tree-and-the-stars.jpg', 'rb') as night_sky:
-       tagging = api.interface('image_tagging', 'image', night_sky.sky.read(), imagePostMode='raw')
+       tagging = api.interface('image_tagging', 'image', night_sky.read(), imagePostMode='raw')
 
    json.dumps(tagging)
 
