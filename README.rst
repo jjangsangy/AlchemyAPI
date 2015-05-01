@@ -44,9 +44,12 @@ Image Tagging
 .. code-block:: python
 
    import json
+   import os
    from alchemyapi import AlchemyAPI, Auth
 
-   auth = Auth('$API_KEY')
+   API_KEY = os.env.get("ALCHEMY_API_KEY")
+
+   auth = Auth(API_KEY)
    api  = AlchemyAPI(auth)
 
    with open('the-tree-and-the-stars.jpg', 'rb') as night_sky:
